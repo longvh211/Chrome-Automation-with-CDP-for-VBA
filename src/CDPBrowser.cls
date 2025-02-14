@@ -168,7 +168,7 @@ Public Sub start(Optional name As String = "chrome", _
         If InStr(appUrl, "http") = 0 Then appUrl = "http://" & appUrl   'ie. devs can just simply input "google.com" i/o "http://google.com"
         strCall = strCall & " --app=""" & appUrl & """"
     Else
-        strCall = strCall & "--homepage ""about:blank"""
+        strCall = strCall & " --homepage ""about:blank"""
     End If
    '-------------------------------------------------------------------------------------------------------------------------------------------------------
 
