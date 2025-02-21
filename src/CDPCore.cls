@@ -45,18 +45,18 @@ Private Declare PtrSafe Function ReadFile Lib "kernel32" ( _
     lpNumberOfBytesRead As Long, _
     ByVal lpOverlapped As Any) As Long
  
-Private Declare PtrSafe Function CreateProcessA Lib "kernel32" ( _
-    ByVal lpApplicationName As Long, _
-    ByVal lpCommandLine As String, _
+Private Declare PtrSafe Function CreateProcess Lib "kernel32" Alias "CreateProcessW" ( _
+    ByVal lpApplicationName As LongPtr, _
+    ByVal lpCommandLine As LongPtr, _
     lpProcessAttributes As Any, _
     lpThreadAttributes As Any, _
     ByVal bInheritHandles As Long, _
     ByVal dwCreationFlags As Long, _
-    ByVal lpEnvironment As Long, _
-    ByVal lpCurrentDirectory As Long, _
+    ByVal lpEnvironment As Any, _
+    ByVal lpCurrentDirectory As LongPtr, _
     lpStartupInfo As Any, _
     lpProcessInformation As Any) As Long
- 
+    
 Private Declare PtrSafe Function CloseHandle Lib "kernel32" ( _
     ByVal hObject As LongPtr) As Long
  
@@ -287,7 +287,7 @@ Public Function init(strExec As String, Optional aboolSerializable As Boolean = 
         .lpReserved2 = VarPtr(pipes2)
     End With
     
-    result = CreateProcessA(0&, strExec, sa, sa, 1&, NORMAL_PRIORITY_CLASS, 0&, 0&, start, proc)
+    result = CreateProcess(0&, StrPtr(strExec), sa, sa, 1&, NORMAL_PRIORITY_CLASS, 0&, 0&, start, proc)
  
     If result = 0 Then init = -1
     
