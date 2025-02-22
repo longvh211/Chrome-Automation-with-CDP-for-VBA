@@ -215,11 +215,7 @@ Public Function init(strExec As String, Optional aboolSerializable As Boolean = 
     Dim proc As PROCESS_INFORMATION
     Dim start As STARTUPINFO
     Dim sa As SECURITY_ATTRIBUTES
-    Dim hReadPipe As LongPtr, hWritePipe As LongPtr
-    Dim L As Long, result As Long, bSuccess As Long
-    Dim Buffer As String
-    Dim k As Long
-    
+    Dim result As Long
     Dim pipes As STDIO_BUFFER
     Dim pipes2 As STDIO_BUFFER2
  
@@ -335,9 +331,8 @@ Public Function readProcCDP(ByRef strData As String) As Long
     End If
  
 End Function
- 
- 
-Public Function readProcSTD(ByRef strData As String) As Integer
+
+Public Function readProcSTD(ByRef strData As String) As Long
 ' --------------------------------------------------------------------------------
 ' Same as ReadProcCDP.
 '---------------------------------------------------------------------------------
@@ -367,7 +362,7 @@ Public Function readProcSTD(ByRef strData As String) As Integer
 End Function
  
  
-Public Function writeProc(ByVal strData As String) As Integer
+Public Function writeProc(ByVal strData As String) As Long
 ' --------------------------------------------------------------------------------
 ' This functions sends a CDP message to the Chromium browser.
 '---------------------------------------------------------------------------------
