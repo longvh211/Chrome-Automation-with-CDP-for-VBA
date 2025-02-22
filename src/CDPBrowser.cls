@@ -138,7 +138,7 @@ Public Sub start(Optional name As String = "chrome", _
 '--------------------------------------------------------------------------------------------------------------
 
     Dim strCall As String
-    Dim intRes As Integer
+    Dim result As Long
     Dim timeStart As Single
                            
     timeStart = Timer
@@ -168,7 +168,7 @@ Public Sub start(Optional name As String = "chrome", _
         If InStr(appUrl, "http") = 0 Then appUrl = "http://" & appUrl   'ie. devs can just simply input "google.com" i/o "http://google.com"
         strCall = strCall & " --app=""" & appUrl & """"
     Else
-        strCall = strCall & " --homepage ""about:blank"""
+        strCall = strCall & "--homepage ""about:blank"""
     End If
    '-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -193,8 +193,8 @@ Public Sub start(Optional name As String = "chrome", _
    'Initialize CDPCore class ----------------------------------------------------------------------------------------------------------
     Set core = New CDPCore
     brCallString = strCall
-    intRes = core.init(brCallString, aboolSerializable:=True)  'Serializable is set to True by default for ease of accessibility
-    If intRes <> 0 Then printMsg "Unable to initialize CDPCore", doRaiseError:=True Else printMsg "CDPCore initialized successfully"
+    result = core.init(brCallString)
+    If result <> 0 Then printMsg "Unable to initialize CDPCore", doRaiseError:=True Else printMsg "CDPCore initialized successfully"
     lngLastID = 1
    '-----------------------------------------------------------------------------------------------------------------------------------
        
