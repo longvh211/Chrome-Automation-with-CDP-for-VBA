@@ -207,7 +207,7 @@ Public Sub deserialize(strSerialized As String)
 End Sub
  
  
-Public Function init(strExec As String, Optional aboolSerializable As Boolean = False) As Integer
+Public Function init(strExec As String) As Long
 '-------------------------------------------------------------------
 ' Initialize new browser instance via pipe creation.
 '-------------------------------------------------------------------
