@@ -40,7 +40,7 @@ Private Declare PtrSafe Function CreatePipe Lib "kernel32" ( _
  
 Private Declare PtrSafe Function ReadFile Lib "kernel32" ( _
     ByVal hFile As LongPtr, _
-    ByVal lpBuffer As String, _
+    ByRef lpBuffer As Any, _
     ByVal nNumberOfBytesToRead As Long, _
     lpNumberOfBytesRead As Long, _
     ByVal lpOverlapped As Any) As Long
@@ -222,7 +222,7 @@ Public Function init(strExec As String) As Long
    'First we create all 4 pipes
    'We start with stdout of the edge process
    'This pipe is used for stderr, too
-    sa.nLength = Len(sa)
+    sa.nLength = LenB(sa)
     sa.bInheritHandle = 1&
     sa.lpSecurityDescriptor = 0&
     result = CreatePipe(hStdOutRd, hStdOutWr, sa, 0)
@@ -273,13 +273,13 @@ Public Function init(strExec As String) As Long
     
    'Define new instance parameters and start it
     With start
-        .cb = Len(start)
+        .cb = LenB(start)
         .dwFlags = STARTF_USESHOWWINDOW
         .hStdOutput = hStdOutWr
         .hStdInput = hStdInRd
         .hStdError = hStdOutWr
         .wShowWindow = SW_SHOWMINIMIZED 'minimize the window at start
-        .cbReserved2 = Len(pipes2)
+        .cbReserved2 = LenB(pipes2)
         .lpReserved2 = VarPtr(pipes2)
     End With
     
@@ -317,7 +317,7 @@ Public Function readProcCDP(ByRef strData As String) As Long
         Dim L As Long
         Dim bSuccess As Long
         Buffer = Space$(lPeekData)
-        bSuccess = ReadFile(hCDPOutRd, Buffer, Len(Buffer), L, 0&)
+        bSuccess = ReadFile(hCDPOutRd, ByVal Buffer, Len(Buffer), L, 0&)
         
         If bSuccess = 1 Then
             strData = Buffer
@@ -346,7 +346,7 @@ Public Function readProcSTD(ByRef strData As String) As Long
         Dim L As Long
         Dim bSuccess As Long
         Buffer = Space$(lPeekData)
-        bSuccess = ReadFile(hStdOutRd, Buffer, Len(Buffer), L, 0&)
+        bSuccess = ReadFile(hStdOutRd, ByVal Buffer, Len(Buffer), L, 0&)
         
         If bSuccess = 1 Then
             strData = Buffer
