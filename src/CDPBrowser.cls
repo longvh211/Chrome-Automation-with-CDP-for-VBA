@@ -175,13 +175,13 @@ Public Sub start(Optional name As String = "chrome", _
    'Start with a choice profile -------------------------------------------------------------------------------------------------------------
    Dim addProfile As String
    If userProfile <> "Default" Then
-        brUser = userProfile
         Select Case brType
             Case brEdge: addProfile = " --user-data-dir=""" & Environ("LOCALAPPDATA") & "\Microsoft\Edge\User Data\" & userProfile & """"
             Case brChrome: addProfile = " --user-data-dir=""" & Environ("LOCALAPPDATA") & "\Google\Chrome\User Data\" & userProfile & """"
         End Select
         strCall = strCall & addProfile
     End If
+    brUser = userProfile
    '-----------------------------------------------------------------------------------------------------------------------------------------
        
    'Prepare for initialization ------------------------------------------------------------------------
